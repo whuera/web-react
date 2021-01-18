@@ -1,34 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from 'react';
+import { Component, useEffect, useState } from 'react';
+import {UserService} from './service/UserService';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
-function App() {
-  const url = "http://localhost:8080/users"
-  const [users, setUsers] = useState()
-  const fetchApi = async() => {
-    const response = await fetch(url)
-    console.log(response.status)
-    const responseJSON = await response.json()
-    setUsers(responseJSON)
-    console.log(responseJSON)
-  }
-  useEffect(() => {
-    fetchApi()
-  },[])
-  return (
-    <div className="App">
-      Hola Mundo 2!!
-      <ul>
-        {!users ? 'Cargando....' : 
-        users.map((user, index)=>{
-          return <li>{user.firstName}</li>
-        }
-
-        )
-        }
-      </ul>
-    </div>
-  );
+export default class App extends Component{
+constructor(){
+  super();
+ this.state = {};
+this.userService = new UserService();
+}
+componentDidMount(){
+  this.userService.getAll().then(data => this.setState({user: data}))
+}
+render(){
+  return(    
+    <DataTable value={this.state.user}>
+      <Column field="id" header="ID"></Column>
+      <Column field="firstName" header="Nombres"></Column>
+      <Column field="lastName" header="Apellidos"></Column>
+    </DataTable>
+  )
 }
 
-export default App;
+}
