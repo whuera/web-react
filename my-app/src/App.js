@@ -31,7 +31,7 @@ export default class App extends Component {
         <div className="card">
           <DataTable value={this.state.user}
                     paginator rows={5}                    
-                    header="Header" footer="Footer" className="p-datatable-gridlines">
+                    header="Header" footer="Footer" className="p-datatable-gridlines" style={{width: '80%', margin: '0 auto', marginTop: '20px'}}>
             <Column field="id" header="ID"></Column>
             <Column field="firstName" header="Nombres"></Column>
             <Column field="lastName" header="Apellidos"></Column>
