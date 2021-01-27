@@ -6,3 +6,4 @@ export class UserService{
         return axios.get(this.baseUrl).then(res => res.data);
     }
 }
+export default UserService;

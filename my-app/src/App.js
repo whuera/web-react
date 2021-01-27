@@ -1,43 +1,45 @@
 import React from "react";
-import "./App.css";
-import { Component, useEffect, useState } from "react";
-import { UserService } from "./service/UserService";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { Panel } from "primereact/panel";
-import { Card } from "primereact/card";
-import { Button } from 'primereact/button';
+import UserService from './service/UserService'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Contacto from "./components/Contacto";
+import { Nosotros } from "./components/Nosotros";
+import { Inicio } from "./components/Inicio";
 
-import "primereact/resources/themes/saga-blue/theme.css";
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
-
-
-
-export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {};
-    this.userService = new UserService();
-  }
-  componentDidMount() {
-    this.userService.getAll().then((data) => this.setState({ user: data }));    
-  }
-  render() {
-    const paginatorLeft = <Button type="button" icon="pi pi-refresh" className="p-button-text" />;
-    const paginatorRight = <Button type="button" icon="pi pi-cloud" className="p-button-text" />;
-    return (
-      <div>
-        <div className="card">
-          <DataTable value={this.state.user}
-                    paginator rows={5}                    
-                    header="Header" footer="Footer" className="p-datatable-gridlines" style={{width: '80%', margin: '0 auto', marginTop: '20px'}}>
-            <Column field="id" header="ID"></Column>
-            <Column field="firstName" header="Nombres"></Column>
-            <Column field="lastName" header="Apellidos"></Column>
-          </DataTable>
+function App() {
+  return (
+    <Router>
+      <div className="container mt-5">
+        <div className="btn-group">
+          <Link to="/" className="btn btn-dark">
+            Inicio
+          </Link>
+          <Link to="/contacto" className="btn btn-dark">
+            Contacto
+          </Link>
+          <Link to="/nosotros" className="btn btn-dark">
+            Nosotros
+          </Link>
         </div>
+        <hr />
+        <Switch>
+          <Route path="/contacto">
+            <Contacto />
+          </Route>
+          <Route path="/nosotros">
+            <Nosotros />
+          </Route>
+          <Route path="/" exact>
+            <Inicio />
+          </Route>
+        </Switch>
       </div>
-    );
-  }
+    </Router>
+  );  
 }
+
+export default App;
